@@ -23,7 +23,8 @@ import { ResponseMenu } from 'src/app/models/responsemenu';
 
 export class MenuComponent implements OnInit {
   //@ViewChild(LoginUsuariosComponent) child;
-  menus:ResponseMenu[] = [];
+  //menus:ResponseMenu[] = [];
+  menusAngular:ResponseMenu[] = [];
   tio: Tio;
   nombre = '';
   email = 'zddfdfdsfd';
@@ -57,14 +58,25 @@ export class MenuComponent implements OnInit {
   async ngOnInit() {
     const response = await this.menuService.lista(); 
     if(response){
-      this.menus = response.data;
+      this.menusAngular = response.data;
       console.log('menus');
-      console.log(JSON.stringify(this.menus));
+      console.log(JSON.stringify(this.menusAngular));
+      this.menuService.setMenusArray(this.menusAngular);
     }else {
       console.log('no esta autorizado');
     }
      
   }
+
+  get menus() {
+    const menuString:string = this.menuService.getMenusArray();
+    let MenusArray:ResponseMenu[] = []
+    if(menuString.length > 0){
+      MenusArray = JSON.parse(menuString);
+    }
+    return MenusArray;
+  }
+
   /* ngAfterViewInit() {
     this.usuariologeado = this.child.usuariologeado
   } */
@@ -73,7 +85,7 @@ export class MenuComponent implements OnInit {
     return this.tokenService.getUser();
   }
 
-  logout() {
+  async logout() {
     const usuario: Usertoken = {
       id: 1,
       token:"",
@@ -87,6 +99,8 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['/login']);
     this.tokenService.setUser(usuario);
     this.tokenService.logout();
+    await this.ngOnInit();
+    this.menuService.setMenusLimpiar();
   }
 
 }

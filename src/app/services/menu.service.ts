@@ -12,8 +12,27 @@ export class MenuService {
   myAppUrl2 = "https://localhost:5001/";
   myApiUrl = "https://localhost:7107/api/menu/";
   KEYTOKEN = "KEYTOKEN";
+  MENU = "MENU";
   constructor(private httpClient: HttpClient) {
 
+  }
+
+  setMenusLimpiar(): void{
+    const menus = JSON.stringify([]);
+    localStorage.setItem(this.MENU, menus);
+  }
+
+  setMenusArray(MenusArray:ResponseMenu[]): void{
+    const menus = JSON.stringify(MenusArray);
+    localStorage.setItem(this.MENU, menus);
+  }
+
+  getMenusArray(): string{
+    const menu = localStorage.getItem(this.MENU);
+    if(menu != null){ 
+      return menu;
+    }
+    return "";
   }
 
   getMenus(): Observable<ResponseMenu> {
