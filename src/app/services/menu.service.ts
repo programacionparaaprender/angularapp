@@ -17,6 +17,16 @@ export class MenuService {
 
   }
 
+  async setMenus(){
+    const response = await this.lista(); 
+    if(response){
+      const menusAngular = response.data;
+      this.setMenusArray(menusAngular);
+    }else {
+      console.log('no esta autorizado');
+    }
+  }
+
   setMenusLimpiar(): void{
     const menus = JSON.stringify([]);
     localStorage.setItem(this.MENU, menus);

@@ -12,6 +12,7 @@ import { TokenService } from 'src/app/services/token.service';
 import { Usertoken } from 'src/app/models/usertoken';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Responseusertoken } from 'src/app/models/responseusertoken';
+import { MenuService } from 'src/app/services/menu.service';
 
 @Component({
   selector: 'app-login-usuarios',
@@ -29,6 +30,7 @@ export class LoginUsuariosComponent implements OnInit {
     private tioService: TioService, 
     private router: Router,
     private fb: FormBuilder, 
+    private menuService: MenuService,
     private tokenService: TokenService) { 
       this.registerForm = this.fb.group({ 
         nombre: ['', Validators.required], 
@@ -77,6 +79,7 @@ export class LoginUsuariosComponent implements OnInit {
             status:data.status
           };
           this.tokenService.setUser(usertoken);
+          this.menuService.setMenus();
           this.router.navigate(['/tarjeta']);
         }else{
           console.log('ocurrio un error')
