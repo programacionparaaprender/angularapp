@@ -79,7 +79,8 @@ export class LoginUsuariosComponent implements OnInit {
             status:data.status
           };
           this.tokenService.setUser(usertoken);
-          this.menuService.setMenus();
+          this.tokenService.setToken(usertoken.token);
+          await this.menuService.setMenus();
           this.router.navigate(['/tarjeta']);
         }else{
           console.log('ocurrio un error')

@@ -47,6 +47,10 @@ export class TokenService {
     localStorage.setItem('login', JSON.stringify(user));
   }
 
+  setToken(token: string): void{
+    localStorage.setItem('token', token); 
+  }
+
   getUser():Usertoken | null  {
     let user: Usertoken;
     let cadena: string | null = localStorage.getItem('login');

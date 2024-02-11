@@ -79,6 +79,8 @@ export class RegistrarUsuariosComponent implements OnInit {
             role: "",
             status: 404
           };
+
+          
           this.tokenService.setUser(usertoken);
           this.router.navigate(['/login']);
         }else{
